@@ -1,0 +1,3 @@
+Filter length: 85
+Number of elements: 10
+Elements: 1 2 3 a b c
