@@ -11,6 +11,7 @@ void test1() {
     int elem1 = 6;
     add(&elem1, b);
     int cont = contains(&elem1, b);
+    printf("expected: true | result: ");
     if (cont == 1) printf("true");
     else printf("false");
     printf("\n");
@@ -18,6 +19,7 @@ void test1() {
     int elem2 = 'c';
     add(&elem2, b);
     cont = contains(&elem2, b);
+    printf("expected: true | result: ");
     if (cont == 1) printf("true");
     else printf("false");
 
@@ -37,16 +39,19 @@ void test2() {
     int elem1 = 'c';
     add(&elem1, b);
     int cont = contains(&elem1, b);
+    printf("expected: true | result: ");
     if (cont == 1) printf("true\n");
     else printf("false\n");
 
     double elem2 = 1.01;
     cont = contains(&elem2, b);
+    printf("expected: false | result: ");
     if (cont == 1) printf("true\n");
     else printf("false\n");
 
     add(&elem2, b);
     cont = contains(&elem1, b);
+    printf("expected: true | result: ");
     if (cont == 1) printf("true\n");
     else printf("false\n");
 
@@ -61,11 +66,13 @@ void test3() {
 
     char *elem = "asd";
     int cont = contains(&elem, b);
+    printf("expected: false | result: ");
     if (cont == 1) printf("true\n");
     else printf("false\n");
 
     add(&elem, b);
     cont = contains(&elem, b);
+    printf("expected: true | result: ");
     if (cont == 1) printf("true\n");
     else printf("false\n");
 

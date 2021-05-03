@@ -67,7 +67,7 @@ bloom *readFile() {
 int commandLine(char *line, bloom *b) {
     SetConsoleOutputCP(CP_UTF8);
     scanf("%s", line);
-    if (strlen(line) < 2) errors(6);
+    if (line[0] != '-' || (line[1] != 'a' && line[1] != 'c' && line[1] != 'e' && line[1] != 'h')) errors(6);
     if (line[0] == '-' && line[1] == 'e') return 0;
     if (line[0] == '-' && line[1] == 'h') {
         printf("Командная строка имеет вид -key_n\n");
