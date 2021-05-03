@@ -6,7 +6,9 @@
 #include "../Errors/errors.h"
 #include <windows.h>
 
-bloom *readFile(FILE *file) {
+bloom *readFile() {
+    FILE *file = fopen("C:\\Users\\GamerPro\\CLionProjects\\Bloom-filter\\input.txt", "r");
+    if (file == NULL) errors(1);
     char ch;
     bloom *b;
     char *string = (char *)calloc(1, sizeof(char));
@@ -58,6 +60,7 @@ bloom *readFile(FILE *file) {
     if (line > 2) errors(2);
     add(string, b);
     free(string);
+    fclose(file);
     return b;
 }
 
