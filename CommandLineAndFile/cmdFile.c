@@ -73,6 +73,7 @@ bloom *readFile(char *fileName) {
     if (line > 2) errors(3, fileName);
     add(string, b);
     free(string);
+    free(controlOfSections);
     fclose(file);
     return b;
 }
