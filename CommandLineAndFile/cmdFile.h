@@ -3,7 +3,7 @@
 
 #include "../Bloom/bloom.h"
 
-bloom *readFile();
-int commandLine(char *line, bloom *b);
+bloom *readFile(char *fileName);
+int commandLine(char *line, bloom *b, char *fileName);
 
 #endif
