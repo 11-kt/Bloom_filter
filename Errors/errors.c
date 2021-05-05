@@ -46,4 +46,12 @@ void errors(int err, char *string) {
         printf("\nОшибка № %d: Не задан элемент для добавления или проверки\n", err);
         exit(err);
     }
+    if (err == 11) {
+        printf("\nОшибка № %d: Ошибка выделения памяти под %s\n", err, string);
+        exit(err);
+    }
+    if (err == 12) {
+        printf("\nОшибка № %d: Ошибка перераспределения памяти под %s\n", err, string);
+        exit(err);
+    }
 }

@@ -34,8 +34,12 @@ bloom *readFile(char *fileName) {
     char ch;
     bloom *b;
     char *string = (char *)calloc(1, sizeof(char));
+    if (string == NULL) errors(11, "string");
     char *controlOfSections = (char *)calloc(1, sizeof(char));
+    if (controlOfSections == NULL) errors(11, "controlOfSections");
+    // Текущая строка line
     int line = 0;
+    // Переменная count используется для проверки текущего символа (текущей строки line)
     int count = 0;
     int index = 0;
     int filterLength = 0;
@@ -46,33 +50,42 @@ bloom *readFile(char *fileName) {
             index = 0;
             count = 0;
             controlOfSections = (char *)calloc(1, sizeof(char));
+            if (controlOfSections == NULL) errors(11, "controlOfSections");
         }
+        // Проверка, является ли текущий символ строки 1 - 16м
         if (count == 15 && line == 0) controlSection(line, count, controlOfSections);
         if (count > 14 && line == 0) {
             string[index] = ch;
             index++;
             string = (char *)realloc(string, index + 1);
+            if (string == NULL) errors(12, "string");
         }
+        // Проверка, является ли текущий символ строки 2 - 20м
         if (count == 20 && line == 1) controlSection(line, count, controlOfSections);
         if (count > 19 && line == 1) {
             string[index] = ch;
             index++;
             string = (char *)realloc(string, index + 1);
+            if (string == NULL) errors(12, "string");
         }
+        // Проверка, является ли текущий символ строки 3 - 10м
         if (count == 10 && line == 2) controlSection(line, count, controlOfSections);
         if (count > 9 && line == 2 && ch != ' ') {
             string[index] = ch;
             index++;
             if (index > 1) errors(7, fileName);
             string = (char *)realloc(string, index + 1);
+            if (string == NULL) errors(12, "string");
         }
         if (line == 1 && filterLength == 0) {
             filterLength = strtol(string, 0, 10);
             string = (char *)calloc(1, sizeof(char));
+            if (string == NULL) errors(11, "string");
         }
         if (line == 2 && numOfElem == 0) {
             numOfElem = strtol(string, 0, 10);
             string = (char *)calloc(1, sizeof(char));
+            if (string == NULL) errors(11, "string");
             if (filterLength < 1 || numOfElem < 1) errors(5, fileName);
             b = create(filterLength, numOfElem);
             if (b->hashNum < 1) errors(6, fileName);
@@ -81,11 +94,13 @@ bloom *readFile(char *fileName) {
             index = 0;
             add(string, b);
             string = (char *)calloc(1, sizeof(char));
+            if (string == NULL) errors(11, "string");
         }
         if (ch != '\n') {
             controlOfSections[count] = ch;
             count++;
             controlOfSections = (char *) realloc(controlOfSections, count + 1);
+            if (controlOfSections == NULL) errors(12, "controlOfSections");
         }
     }
     if (line > 2) errors(3, fileName);

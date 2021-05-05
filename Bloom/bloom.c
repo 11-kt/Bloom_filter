@@ -3,6 +3,7 @@
 #include "bloom.h"
 #include "math.h"
 #include "../Hash/hash.h"
+#include "../Errors/errors.h"
 
 void add(const void *element, bloom *b) {
     uint64_t *hashed = hash((const uint8_t*)element, b->hashNum, b);
@@ -25,12 +26,14 @@ int contains(const void *element, bloom *b) {
 
 bloom *create(int length, int elementsNum) {
     bloom *b = (bloom *)calloc(1, sizeof(bloom));
+    if (b == NULL) errors(11, "структуру фильтра Блума: b");
     b->size = length;
     b->numOfElements = elementsNum;
     b->hashNum = (int)(log(2) * length / elementsNum);
     b->seed = rand() * 32 + 32;
     b->numOfAddedElem = 0;
     b->bitField = (int *)calloc(length, sizeof(int));
+    if (b->bitField == NULL) errors(11, "битовое поле структуры фильтра Блума: b (b->bitField)");
     return b;
 }
 
