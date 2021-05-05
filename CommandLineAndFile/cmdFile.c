@@ -6,6 +6,28 @@
 #include "../Errors/errors.h"
 #include <windows.h>
 
+void controlSection(int line, int count, char *currentSection) {
+    char *section;
+    if (line == 0) {
+        section = "Filter length: ";
+        for (int i = 0; i < count; ++i) {
+            if (currentSection[i] != section[i]) errors(4, currentSection);
+        }
+    }
+    if (line == 1) {
+        section = "Number of elements: ";
+        for (int i = 0; i < count; ++i) {
+            if (currentSection[i] != section[i]) errors(4, currentSection);
+        }
+    }
+    if (line == 2) {
+        section = "Elements: ";
+        for (int i = 0; i < count; ++i) {
+            if (currentSection[i] != section[i]) errors(4, currentSection);
+        }
+    }
+}
+
 bloom *readFile(char *fileName) {
     FILE *file = fopen(fileName, "r");
     if (file == NULL) errors(2, fileName);
@@ -25,25 +47,19 @@ bloom *readFile(char *fileName) {
             count = 0;
             controlOfSections = (char *)calloc(1, sizeof(char));
         }
-        if (count == 15 && line == 0 && strcmp(controlOfSections, "Filter length: ") == -1) errors(4, controlOfSections);
+        if (count == 15 && line == 0) controlSection(line, count, controlOfSections);
         if (count > 14 && line == 0) {
             string[index] = ch;
             index++;
             string = (char *)realloc(string, index + 1);
         }
-        if (count == 20 && line == 1 && strcmp(controlOfSections, "\nNumber of elements: ") == -1) {
-            controlOfSections[0] = ' ';
-            errors(4, controlOfSections);
-        }
+        if (count == 20 && line == 1) controlSection(line, count, controlOfSections);
         if (count > 19 && line == 1) {
             string[index] = ch;
             index++;
             string = (char *)realloc(string, index + 1);
         }
-        if (count == 10 && line == 2 && strcmp(controlOfSections, "\nElements: ") == -1) {
-            controlOfSections[0] = ' ';
-            errors(4, controlOfSections);
-        }
+        if (count == 10 && line == 2) controlSection(line, count, controlOfSections);
         if (count > 9 && line == 2 && ch != ' ') {
             string[index] = ch;
             index++;
@@ -66,15 +82,18 @@ bloom *readFile(char *fileName) {
             add(string, b);
             string = (char *)calloc(1, sizeof(char));
         }
-        controlOfSections[count] = ch;
-        count++;
-        controlOfSections = (char *)realloc(controlOfSections, count + 1);
+        if (ch != '\n') {
+            controlOfSections[count] = ch;
+            count++;
+            controlOfSections = (char *) realloc(controlOfSections, count + 1);
+        }
     }
     if (line > 2) errors(3, fileName);
     add(string, b);
     free(string);
     free(controlOfSections);
     fclose(file);
+    printf("Конфигурационный файл успешно прочитан\n");
     return b;
 }
 

@@ -13,11 +13,13 @@ void errors(int err, char *string) {
         exit(err);
     }
     if (err == 3) {
-        printf("\nОшибка № %d: Файл: %s неправильно задан. Ожидалось:\nFilter length:\nNumber of elements:\nElements:", err, string);
+        printf("\nОшибка № %d: Файл: %s неправильно задан. Ожидалось:\nFilter length:"
+               "\nNumber of elements:\nElements:\nКоличество строк больше трех", err, string);
         exit(err);
     }
     if (err == 4) {
-        printf("\nОшибка № %d: Раздел: %s неправильно задан. Ожидалось:\nFilter length:\nNumber of elements:\nElements:", err, string);
+        printf("\nОшибка № %d: Раздел: %s неправильно задан. Ожидалось:\nFilter length:\nNumber of elements:"
+               "\nElements:", err, string);
         exit(err);
     }
     if (err == 5) {
